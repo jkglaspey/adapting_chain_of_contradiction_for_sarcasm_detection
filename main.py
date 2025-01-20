@@ -1,12 +1,16 @@
+from functools import partial
 from data_processing.read_ghosh import GhoshReader
 from data_processing.read_iacv1 import IACv1Reader
+from data_processing.read_iacv2 import IACv2Reader
+from data_processing.read_isarcasmeval import ISarcasmEvalReader
+from data_processing.read_semeval2018 import SemEval2018Reader
 
 class MainApp:
-    def run(self, data_number: int):
+    def run(self, data_number: int, datatype_number: int):
         dataset_map = {
             0: self.read_ghosh,
             1: self.read_iacv1,
-            2: self.read_iacv2,
+            2: partial(self.read_iacv2, datatype_number=datatype_number),
             3: self.read_iSarcasmEval,
             4: self.read_semeval2018,
         }
@@ -34,9 +38,9 @@ class MainApp:
             print("No data found or failed to read the file.")
             return
 
-        print(f"Parsed {len(data)} lines of data:\n")
         for idx, (label, text) in enumerate(data, start=1):
             print(f"{idx}. Label: {label}, Text: {text}")
+        print(f"Parsed {len(data)} lines of data:\n")
 
     """
     Read in the IAC-V1 dataset
@@ -45,24 +49,48 @@ class MainApp:
     def read_iacv1():
         print("Reading data from IAC-V1 file...\n")
         data = IACv1Reader.read_data()
-        data = IACv1Reader.shuffle_data()
 
         if not data:
             print("No data found or failed to read the file.")
             return
 
-        print(f"Parsed {len(data)} lines of data:\n")
         for idx, (label, text) in enumerate(data, start=1):
             print(f"{idx}. Label: {label}, Text: {text}")
+        print(f"Parsed {len(data)} lines of data:\n")
 
     """
     Read in the IAC-V2 dataset
     """
     @staticmethod
-    def read_iacv2():
-        print("Reading data from IAC-V2 dataset...")
-        # Add logic to read IAC-V2 dataset
-        return
+    def read_iacv2(datatype_number: int):
+        print(f'Using datatype: {datatype_number} --> Reading data from IAC-V2 dataset...')
+
+        # Datatype assignment
+        # 0 = All groups
+        # 1 = General
+        # 2 = Hyperbole
+        # 3 = Rhetorical Questions
+        datatype_map = {
+            0: IACv2Reader.read_all,
+            1: IACv2Reader.read_gen,
+            2: IACv2Reader.read_hyp,
+            3: IACv2Reader.read_rq,
+        }
+
+        # Retrieve and call the corresponding method, or handle invalid numbers
+        get_datatype = datatype_map.get(datatype_number)
+        if get_datatype:
+            data = get_datatype()
+        else:
+            print(f"Error: Invalid method number '{datatype_number}'. Please choose between 0 and 3.")
+
+        if not data:
+            print("No data found or failed to read the file.")
+            return
+
+        for idx, (label, text) in enumerate(data, start=1):
+            print(f"{idx}. Label: {label}, Text: {text}")
+        print(f"Parsed {len(data)} lines of data:\n")
 
     """
     Read in the iSarcasmEval dataset
@@ -70,8 +98,15 @@ class MainApp:
     @staticmethod
     def read_iSarcasmEval():
         print("Reading data from iSarcasmEval dataset...")
-        # Add logic to read iSarcasmEval dataset
-        return
+        data = ISarcasmEvalReader.read_data()
+
+        if not data:
+            print("No data found or failed to read the file.")
+            return
+
+        for idx, (label, text) in enumerate(data, start=1):
+            print(f"{idx}. Label: {label}, Text: {text}")
+        print(f"Parsed {len(data)} lines of data:\n")
 
     """
     Read in the SemEval 2018 Task 3 dataset
@@ -79,8 +114,15 @@ class MainApp:
     @staticmethod
     def read_semeval2018():
         print("Reading data from SemEval 2018 Task 3 dataset...")
-        # Add logic to read SemEval 2018 dataset
-        return
+        data = SemEval2018Reader.read_data()
+
+        if not data:
+            print("No data found or failed to read the file.")
+            return
+
+        for idx, (label, text) in enumerate(data, start=1):
+            print(f"{idx}. Label: {label}, Text: {text}")
+        print(f"Parsed {len(data)} lines of data:\n")
 
 
 if __name__ == "__main__":
@@ -92,8 +134,9 @@ if __name__ == "__main__":
     3 = iSarcasmEval
     4 = SemEval2018Task3
     """
-    data_number = 1  # Change this value to select the dataset
+    data_number = 4         # Change this value to select the dataset
+    datatype_number = 1     # Change this value to select the datatype for IACv2
 
     # Execute the main logic
     app = MainApp()
-    app.run(data_number)
+    app.run(data_number, datatype_number)

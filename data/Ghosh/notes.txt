@@ -1,0 +1,1 @@
+In SarcasmBench, 7,804 noisy tweets were filtered out. No other information provided, so this dataset is slightly larger.

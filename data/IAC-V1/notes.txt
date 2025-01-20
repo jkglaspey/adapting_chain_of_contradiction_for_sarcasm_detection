@@ -1,0 +1,1 @@
+The README describes 997+998 = 1995 data in the dataset. The code scans 1993 (missing 2). This differs from SarcasmBench, so we will generalize results.

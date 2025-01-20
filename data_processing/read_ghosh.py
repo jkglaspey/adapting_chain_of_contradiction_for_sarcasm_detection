@@ -15,7 +15,7 @@ class GhoshReader:
                     
                     if len(parts) == 3:
                         text = replace_emojis(parts[2])
-                        label = bool(1 - int(parts[1]))
+                        label = bool(int(parts[1]))
                         data.append((label, text))
                     else:
                         print(f"Skipped malformed line: {line.strip()}")
