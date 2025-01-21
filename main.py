@@ -1,9 +1,11 @@
 from functools import partial
+import argparse
 from data_processing.read_ghosh import GhoshReader
 from data_processing.read_iacv1 import IACv1Reader
 from data_processing.read_iacv2 import IACv2Reader
 from data_processing.read_isarcasmeval import ISarcasmEvalReader
 from data_processing.read_semeval2018 import SemEval2018Reader
+
 
 class MainApp:
     def run(self, data_number: int, datatype_number: int):
@@ -134,8 +136,17 @@ if __name__ == "__main__":
     3 = iSarcasmEval
     4 = SemEval2018Task3
     """
-    data_number = 4         # Change this value to select the dataset
-    datatype_number = 1     # Change this value to select the datatype for IACv2
+
+    # Scan in input parameters
+    parser = argparse.ArgumentParser(description="Allow the user to configure parameters directly in the command line.")
+    parser.add_argument("--dataset_number", required=True, help="Select the correct dataset. 0 = Ghosh, 1 = IAC-V1, 2 = IAC-V2, 3=iSarcasmEval, 4 = SemEval2018Task3")
+    parser.add_argument("--api_key", required=True, help="Your OpenAI API key")
+    args = parser.parse_args()
+
+    # Configure input parameters
+    openai_api_key = args.api_key
+    data_number = args.dataset_number
+    datatype_number = 1     # Don't change this unless experimenting.
 
     # Execute the main logic
     app = MainApp()
