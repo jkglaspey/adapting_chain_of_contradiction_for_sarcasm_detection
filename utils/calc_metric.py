@@ -28,4 +28,4 @@ def calc_acc(TP: int, TN: int, FP: int, FN: int) -> float:
     if denom == 0:
         return 0.0
     
-    return TP + TN / denom
+    return (TP + TN) / denom

@@ -1,0 +1,27 @@
+------------------
+Dataset Number: 5
+LLM Model Used: 0
+Number of Samples Evaluated: 10
+
+Results:
+Data Label	LLM Label
+False	True		(TP = 0, FP = 1, TN = 0, FN = 0)
+True	True		(TP = 1, FP = 1, TN = 0, FN = 0)
+True	True		(TP = 2, FP = 1, TN = 0, FN = 0)
+False	False		4. (TP = 2, FP = 1, TN = 1, FN = 0)
+True	True		5. (TP = 3, FP = 1, TN = 1, FN = 0)
+False	True		6. (TP = 3, FP = 2, TN = 1, FN = 0)
+False	True		7. (TP = 3, FP = 3, TN = 1, FN = 0)
+True	True		8. (TP = 4, FP = 3, TN = 1, FN = 0)
+True	True		9. (TP = 5, FP = 3, TN = 1, FN = 0)
+False	True		10. (TP = 5, FP = 4, TN = 1, FN = 0)
+
+Metrics:
+True Positives (TP): 5
+False Positives (FP): 4
+False Negatives (FN): 0
+True Negatives (TN): 1
+Precision: 0.5556
+Recall: 1.0000
+F1 Score: 0.7143
+Accuracy: 0.6000

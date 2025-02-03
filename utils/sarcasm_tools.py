@@ -3,9 +3,9 @@ def is_sarcastic(response: str) -> bool:
 
     normalized_response = response.strip().lower()
     
-    if "sarcastic" in normalized_response:
-        return 1
-    elif "not sarcastic" in normalized_response:
-        return 0
+    if "not sarcastic" in normalized_response:
+        return False
+    elif "sarcastic" in normalized_response:
+        return True
     else:
         raise ValueError(f"Unexpected response: '{response}'")
