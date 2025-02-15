@@ -15,11 +15,11 @@ def start_conversation_with_gpt(iterable_list, api_key_var: str, filename: str):
     )
 
     # Define variables
-    TP = 8822
-    TN = 5673
-    FP = 4477
-    FN = 26
-    start_idx = 18999
+    TP = 0
+    TN = 0
+    FP = 0
+    FN = 0
+    start_idx = 1
     length_list = len(iterable_list)
 
     for idx, (label, item) in enumerate(iterable_list[(start_idx - 1):], start=start_idx):
