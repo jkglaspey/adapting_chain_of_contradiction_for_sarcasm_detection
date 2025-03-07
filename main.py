@@ -7,6 +7,7 @@ from data_processing.read_isarcasmeval import ISarcasmEvalReader
 from data_processing.read_semeval2018 import SemEval2018Reader
 from data_processing.read_testdata import TestDataReader
 from llm.openai import initialize_chat_with_gpt
+from llm.llama import initialize_chat_with_llama
 
 
 class MainApp:
@@ -41,10 +42,9 @@ class MainApp:
 
         llm_map = {
             0: self.chat_gpt,
-            1: self.chat_claude,
-            2: self.chat_llama,
-            3: self.chat_bert,
-            4: self.chat_deberta
+            1: self.chat_llama,
+            2: self.chat_bert,
+            3: self.chat_deberta
         }
 
         # Write the header
@@ -65,7 +65,7 @@ class MainApp:
             # Call the function and store the result
             TP, TN, FP, FN = llm_map[llm_number](data, api_key, filename)
         else:
-            print(f"Error: Invalid llm number '{llm_number}'. Please choose between 0 and 4.")
+            print(f"Error: Invalid llm number '{llm_number}'. Please choose between 0 and 3.")
             return
 
     """
@@ -185,18 +185,11 @@ class MainApp:
         return initialize_chat_with_gpt(data, api_key, filename)
     
     """
-    Converse with Claude
+    Converse with LLaMa 2-7B
     """
     @staticmethod
-    def chat_claude(data):
-        return
-    
-    """
-    Converse with LLaMa 3
-    """
-    @staticmethod
-    def chat_llama(data):
-        return
+    def chat_llama(data, api_key, filename):
+        return initialize_chat_with_llama(data, "llama3:8b", filename)
     
     """
     Converse with BERT
@@ -227,7 +220,7 @@ if __name__ == "__main__":
     # Scan in input parameters
     parser = argparse.ArgumentParser(description="Allow the user to configure parameters directly in the command line.")
     parser.add_argument("--dataset_number", required=True, help="Select the correct dataset. 0 = Ghosh, 1 = IAC-V1, 2 = IAC-V2, 3 = iSarcasmEval, 4 = SemEval2018Task3, 5 = Test Dataset")
-    parser.add_argument("--llm_number", required=True, help="Select the LLM to converse to. 0 = GPT, 1 = Claude, 2 = LLaMa 3, 3 = BERT, 4 = DeBERTa")
+    parser.add_argument("--llm_number", required=True, help="Select the LLM to converse to. 0 = GPT, 1 = LLaMa 3, 2 = BERT, 3 = DeBERTa")
     parser.add_argument("--api_key", required=True, help="Your OpenAI API key")
     args = parser.parse_args()
 

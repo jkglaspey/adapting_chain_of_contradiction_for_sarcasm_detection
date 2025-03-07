@@ -1,0 +1,3 @@
+Do not have enough available VRAM to run LLaMA 3-8B.
+- Need: 16 GB
+- Have: 10053 MB
