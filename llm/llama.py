@@ -9,11 +9,11 @@ debug = False
 def start_conversation_with_llama(iterable_list, ollama, filename: str):
 
     # Define variables
-    TP = 0
-    TN = 0
-    FP = 0
-    FN = 0
-    start_idx = 1
+    TP = 142
+    TN = 163
+    FP = 62
+    FN = 87
+    start_idx = 465
     length_list = len(iterable_list)
 
     for idx, (label, item) in enumerate(iterable_list[(start_idx - 1):], start=start_idx):
