@@ -4,7 +4,7 @@ from utils.sarcasm_tools import is_sarcastic
 from utils.calc_metric import calc_acc, calc_F1, calc_precision, calc_recall
 
 # Turn on debugging mode
-debug = True
+debug = False
 
 def start_conversation_with_llama(iterable_list, ollama, filename: str):
 
@@ -23,14 +23,14 @@ def start_conversation_with_llama(iterable_list, ollama, filename: str):
         # Step 1: Start the conversation and ask the first question
         updated_prompt = CoCPrompts[0].replace("$X$", item)
         first_response = chat_with_llama(updated_prompt, ollama)
-        #if debug:
-            #print(f"LLAMA Response 1: {first_response}")
+        if debug:
+            print(f"LLAMA Response 1: {first_response}")
 
         # Step 2: Ask the second question, using the first response
         second_question = CoCPrompts[1]
         second_response = chat_with_llama(second_question, ollama, previous_responses=[updated_prompt, first_response])
-        #if debug:
-            #print(f"LLAMA Response 2: {second_response}")
+        if debug:
+            print(f"LLAMA Response 2: {second_response}")
 
         # Step 3: Ask the third question, using the second response
         third_question = CoCPrompts[2]
