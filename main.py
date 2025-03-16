@@ -8,6 +8,7 @@ from data_processing.read_semeval2018 import SemEval2018Reader
 from data_processing.read_testdata import TestDataReader
 from llm.openai import initialize_chat_with_gpt
 from llm.llama import initialize_chat_with_llama
+from llm.qwen import initialize_chat_with_qwen
 
 
 class MainApp:
@@ -43,7 +44,7 @@ class MainApp:
         llm_map = {
             0: self.chat_gpt,
             1: self.chat_llama,
-            2: self.chat_bert,
+            2: self.chat_qwen,
             3: self.chat_deberta
         }
 
@@ -192,11 +193,11 @@ class MainApp:
         return initialize_chat_with_llama(data, "llama3:8b", filename)
     
     """
-    Converse with BERT
+    Converse with Qwen 2-7B
     """
     @staticmethod
-    def chat_bert(data):
-        return
+    def chat_qwen(data, api_key, filename):
+        return initialize_chat_with_qwen(data, filename)
     
     """
     Converse with DeBERTa
@@ -220,7 +221,7 @@ if __name__ == "__main__":
     # Scan in input parameters
     parser = argparse.ArgumentParser(description="Allow the user to configure parameters directly in the command line.")
     parser.add_argument("--dataset_number", required=True, help="Select the correct dataset. 0 = Ghosh, 1 = IAC-V1, 2 = IAC-V2, 3 = iSarcasmEval, 4 = SemEval2018Task3, 5 = Test Dataset")
-    parser.add_argument("--llm_number", required=True, help="Select the LLM to converse to. 0 = GPT, 1 = LLaMa 3, 2 = BERT, 3 = DeBERTa")
+    parser.add_argument("--llm_number", required=True, help="Select the LLM to converse to. 0 = GPT, 1 = LLaMa 3, 2 = Qwen, 3 = DeBERTa")
     parser.add_argument("--api_key", required=True, help="Your OpenAI API key")
     args = parser.parse_args()
 
