@@ -60,6 +60,71 @@ Possible future directions include integrating alternative strategies from the S
 
 ---
 
+## 6. Running the Code
+
+To run the sarcasm detection pipeline using CoC prompting, execute `main.py` from the command line with the appropriate parameters. This script loads the dataset, initializes the selected LLM, runs CoC prompting, and writes model predictions and evaluation metrics to an output file.
+
+### **Usage**
+```bash
+python main.py --dataset_number <0–5> --llm_number <0–3> --api_key <your_openai_api_key>
+```
+
+### **Parameters**
+- `--dataset_number`: Select the dataset to evaluate.
+  - `0`: Ghosh  
+  - `1`: IAC-V1  
+  - `2`: IAC-V2 (default subset: general)  
+  - `3`: iSarcasmEval  
+  - `4`: SemEval-2018 Task 3  
+  - `5`: Test Dataset (custom/demo use)
+
+- `--llm_number`: Select which language model to use.
+  - `0`: GPT-4o-mini (via OpenAI API)  
+  - `1`: LLaMA 3-8B (via oLLaMA)  
+  - `2`: Qwen 2-7B (via oLLaMA)  
+  - `3`: DeBERTa (placeholder, not implemented)
+
+- `--api_key`: Your OpenAI API key (only needed if GPT is selected)
+
+### **Output**
+A results file will be created (or appended to) in the format:
+
+```text
+results_dataset<dataset_number>_llm<llm_number>.txt
+```
+
+Each file includes:
+- Dataset and LLM configuration
+- Total samples evaluated
+- Ground truth and model prediction for each sample
+- Final classification counts (TP, TN, FP, FN)
+
+### **Example**
+```bash
+python main.py --dataset_number 0 --llm_number 1 --api_key sk-...
+```
+
+This runs sarcasm detection on the Ghosh dataset using LLaMA 3-8B via oLLaMA.
+
+### **Note for Local LLMs (LLaMA 3-8B and Qwen 2-7B)**
+
+To run LLaMA or Qwen locally, you must:
+
+1. Install [oLLaMA](https://ollama.com/) (macOS, Linux, or WSL required).
+2. Download the model before first use:
+   ```bash
+   ollama run llama3:8b
+   ```
+   or
+   ```bash
+   ollama run qwen2:7b
+   ```
+3. Keep oLLaMA running in the background while executing `main.py`.
+
+If oLLaMA or the selected model is not active, the script will fail to connect.
+
+---
+
 ## References
 
 1. Abu Farha et al. 2022. *SemEval-2022 Task 6: iSarcasmEval*. ACL.  
