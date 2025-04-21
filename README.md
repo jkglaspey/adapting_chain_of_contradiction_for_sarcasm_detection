@@ -66,7 +66,7 @@ To run the sarcasm detection pipeline using CoC prompting, execute `main.py` fro
 
 ### **Usage**
 ```bash
-python main.py --dataset_number <0–5> --llm_number <0–3> --api_key <your_openai_api_key>
+python main.py --dataset_number <0–5> --llm_number <0–2> --api_key <your_openai_api_key>
 ```
 
 ### **Parameters**
@@ -82,7 +82,6 @@ python main.py --dataset_number <0–5> --llm_number <0–3> --api_key <your_ope
   - `0`: GPT-4o-mini (via OpenAI API)  
   - `1`: LLaMA 3-8B (via oLLaMA)  
   - `2`: Qwen 2-7B (via oLLaMA)  
-  - `3`: DeBERTa (placeholder, not implemented)
 
 - `--api_key`: Your OpenAI API key (only needed if GPT is selected)
 

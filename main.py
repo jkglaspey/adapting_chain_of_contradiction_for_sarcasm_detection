@@ -44,8 +44,7 @@ class MainApp:
         llm_map = {
             0: self.chat_gpt,
             1: self.chat_llama,
-            2: self.chat_qwen,
-            3: self.chat_deberta
+            2: self.chat_qwen
         }
 
         # Write the header
@@ -198,13 +197,6 @@ class MainApp:
     @staticmethod
     def chat_qwen(data, api_key, filename):
         return initialize_chat_with_qwen(data, filename)
-    
-    """
-    Converse with DeBERTa
-    """
-    @staticmethod
-    def chat_deberta(data):
-        return
 
 
 if __name__ == "__main__":
@@ -221,7 +213,7 @@ if __name__ == "__main__":
     # Scan in input parameters
     parser = argparse.ArgumentParser(description="Allow the user to configure parameters directly in the command line.")
     parser.add_argument("--dataset_number", required=True, help="Select the correct dataset. 0 = Ghosh, 1 = IAC-V1, 2 = IAC-V2, 3 = iSarcasmEval, 4 = SemEval2018Task3, 5 = Test Dataset")
-    parser.add_argument("--llm_number", required=True, help="Select the LLM to converse to. 0 = GPT, 1 = LLaMa 3, 2 = Qwen, 3 = DeBERTa")
+    parser.add_argument("--llm_number", required=True, help="Select the LLM to converse to. 0 = GPT, 1 = LLaMa 3, 2 = Qwen")
     parser.add_argument("--api_key", required=True, help="Your OpenAI API key")
     args = parser.parse_args()
 
